@@ -6,14 +6,13 @@ document.onkeydown = (e) => {
         
         localStorage.getItem("dict") ? 0 : localStorage.setItem("dict", "{}");
         
-        let apis = [`https://vocabulary.vercel.app/word`,`https://vocabulary.vercel.app/words`];
+        let apis = [`https://vocabulary.vercel.app/words`,`https://vocabulary.vercel.app/word`];
         let requests = [];
         let dataResponses = []
 
         let index = 0;
         
         for (let i = 0; i < apis.length; i++) {
-            index++;
             let q = new XMLHttpRequest();
             q.open("GET", `${apis[i]}/${word}`);
             requests.push(q);
@@ -21,6 +20,7 @@ document.onkeydown = (e) => {
                 console.log("data received! checking & saving to dictionary");
                 let data = JSON.parse(q.responseText).data;
                 if (typeof data == "string") {
+                    index++;
                      dataResponses.push(`${index}. ${data}`);   
                 } else if (typeof data == "object") {
                     if (data.length) {
