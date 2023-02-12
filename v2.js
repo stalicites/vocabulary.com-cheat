@@ -27,10 +27,11 @@ document.onkeydown = async (e) => {
                     console.log("Done!");
                 }
             }
-            let answerText = document.getElementsByClassName("correct")[2].innerText
+            let answerText = document.getElementsByClassName("correct is-disabled")[0].innerText;
             storedData[q] = answerText
             console.log(answerText);
-            localStorage.setItem("dict", JSON.stringify(storedData))
+            localStorage.setItem("dict", JSON.stringify(storedData));
+            document.getElementsByClassName("btn-next")[0].click();
         }
     }
 }
