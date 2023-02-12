@@ -4,7 +4,12 @@ function sleep(ms) {
 
 document.onkeydown = async (e) => {
     if (e.key == "/") {
-        let instructionElementList = document.getElementsByClassName("instructions");
+        let instructionElementList;
+        if (document.getElementsByClassName("instructions").length == 0) {
+            instructionElementList = document.getElementsByClassName("sentence")  
+        } else {
+            instructionElementList = document.getElementsByClassName("instructions")
+        }
         let q = instructionElementList[instructionElementList.length - 1].innerText;
         
         localStorage.getItem("dict") ? 0 : localStorage.setItem("dict", "{}");
