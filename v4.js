@@ -2,6 +2,28 @@
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
+    function formatResponses(input) {
+        let response = "";
+        for (let i = 0; i < input.length; i++) {
+            response += `${i+1}. ${input[i]}\n`
+        }
+        return response;
+    }
+
+    function typeWriter(element, text, delay) {
+        isTalking = true;
+        element.innerHTML="";
+        let i = 0;
+        let textInteveral = setInterval(() => {
+            element.innerHTML += text[i];
+            i++;
+            if (text.length < i +1) {
+                clearInterval(textInteveral);
+                isTalking = false;
+            }
+        }, delay)
+    }    
+
     let wordsBeingLearned = [];
     
     const xhr = new XMLHttpRequest();
@@ -46,7 +68,7 @@
                         if (data.length) {
                             data.forEach((item) => {
                                 index++;
-                                dataResponses.push(item.description + "<br>")
+                                dataResponses.push(item.description)
                             })   
                         } else {
                             console.log("some weird data :/", data);
@@ -68,10 +90,10 @@
                         })
                         if (!clicked) {
                             document.getElementsByClassName("instructions")[0].innerHTML += `<br>
-                            <p style="body-color: blue; font-size: 15px;">
-                            ${dataResponses}
+                            <p style="color: #95d4db; font-size: 15px;" id = "listOfDefinitions">
                             </p>
                             `;
+                            typeWriter(document.getElementById("listOfDefinitions"), formatResponses(dataResponses), 40);
                         }
                     }
                 }
